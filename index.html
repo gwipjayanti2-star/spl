@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="id" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem SPL - Professional Edition</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            900: '#0f172a',
+                            accent: '#2563eb'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 10px -2px rgba(0, 0, 0, 0.05)',
+                        'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #fbfcfd; /* Very subtle light gray */
+            color: #1e293b;
+        }
+        
+        /* Hide scrollbar for clean look in table */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .hidden-view { display: none !important; }
+
+        /* Custom Table Inputs styling */
+        .table-input {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 0.375rem;
+            padding: 0.375rem 0.5rem;
+            font-size: 0.8125rem; /* text-sm slightly smaller */
+            transition: all 0.2s;
+        }
+        .table-input:hover { background-color: rgba(255,255,255,0.8); border-color: #cbd5e1; }
+        .table-input:focus { 
+            outline: none; 
+            background-color: #ffffff; 
+            border-color: #94a3b8; 
+            box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.2); 
+        }
+
+        /* Drag Selection Styles */
+        .row-selected { 
+            background-color: #f1f5f9 !important; /* slate-100 */
+        }
+        .row-selected td {
+            border-bottom-color: #e2e8f0;
+        }
+        .drag-handle { 
+            cursor: ns-resize; 
+            user-select: none; 
+            color: #cbd5e1; 
+            text-align: center; 
+            transition: color 0.2s;
+        }
+        tr:hover .drag-handle { color: #94a3b8; }
+        .row-selected .drag-handle { color: #0f172a; }
+
+        /* Toast Animations */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+        .toast-enter { animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .toast-exit { animation: fadeOut 0.3s forwards; }
+
+        /* --- PRINT STYLES --- */
+        .print-container {
+            display: none; 
+            font-family: 'Times New Roman', Times, serif;
+            background: white; color: black; width: 100%;
+        }
+        .print-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: center; }
+        .print-table th, .print-table td { border: 1px solid black; padding: 4px; vertical-align: middle; }
+        .print-table th { font-weight: bold; }
+        
+        .ttd-box { display: flex; justify-content: space-between; margin-top: 20px; text-align: center; font-size: 11px;}
+        .ttd-item { width: 18%; border: 1px solid transparent; }
+        .ttd-status { font-weight: bold; color: #333; margin: 15px 0; white-space: pre-wrap; font-size: 10px; min-height: 30px;}
+
+        @media print {
+            @page { margin: 10mm; }
+            body { background-color: white; }
+            .no-print { display: none !important; }
+            .print-container { display: block; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-40 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="bg-slate-900 text-white p-2 rounded-lg">
+                        <i class="ph ph-briefcase text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg text-slate-900 leading-tight">Sistem SPL</h1>
+                        <p class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">PT. Mayora Indah</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="showHistory()" class="hidden sm:flex text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors items-center gap-2">
+                        <i class="ph ph-clock-counter-clockwise text-lg"></i> Riwayat
+                    </button>
+                    <button onclick="resetApp()" class="hidden sm:flex text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition-colors items-center gap-2">
+                        <i class="ph ph-plus text-lg"></i> Buat Baru
+                    </button>
+                    <span class="text-sm text-slate-500 font-medium ml-2 border-l border-slate-200 pl-4"><i class="ph ph-clock mr-1"></i> <span id="current-time"></span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+        
+        <!-- View: Input Form -->
+        <div id="view-input" class="no-print hidden-view space-y-6">
+            
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-soft border border-slate-200">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Form Pengajuan Lembur</h2>
+                    <p class="text-slate-500 text-sm mt-1">Isi data karyawan yang akan melakukan kerja lembur dengan teliti.</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-40">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tanggal Lembur</label>
+                        <div class="relative">
+                            <i class="ph ph-calendar-blank absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="date" id="input-tanggal" class="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-slate-800 focus:border-slate-800 transition-colors shadow-sm">
+                        </div>
+                    </div>
+                    <div class="w-48">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Bagian (Dept)</label>
+                        <div class="relative">
+                            <i class="ph ph-buildings absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" id="input-bagian" placeholder="Misal: PRODUKSI" class="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-sm uppercase focus:ring-2 focus:ring-slate-800 focus:border-slate-800 transition-colors shadow-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tooling Section (Excel & Bulk) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Excel Paste Card -->
+                <div class="bg-white rounded-2xl shadow-soft border border-slate-200 overflow-hidden">
+                    <button onclick="togglePaste()" class="w-full flex items-center justify-between p-5 hover:bg-slate-50 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-slate-100 text-slate-700 border border-slate-200 p-2 rounded-lg"><i class="ph ph-file-xls text-lg"></i></div>
+                            <div class="text-left">
+                                <h4 class="font-semibold text-slate-900">Import dari Excel</h4>
+                                <p class="text-xs text-slate-500">Copy & Paste langsung dari spreadsheet</p>
+                            </div>
+                        </div>
+                        <i id="excel-chevron" class="ph ph-caret-down text-slate-400 transition-transform"></i>
+                    </button>
+                    
+                    <div id="paste-box" class="hidden px-5 pb-5 border-t border-slate-100 pt-4 bg-slate-50">
+                        <div class="text-xs text-slate-600 mb-3 bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                            <span class="font-semibold text-slate-900">Format Kolom:</span> NIK | NAMA | BAGIAN/ROLE | JAM MULAI | JAM SELESAI | KETERANGAN
+                        </div>
+                        <textarea id="excel-data" rows="4" class="w-full border border-slate-300 p-3 rounded-xl text-sm focus:ring-2 focus:ring-slate-800 focus:border-slate-800 transition-shadow resize-y shadow-sm" placeholder="Paste data (Ctrl+V) di sini..."></textarea>
+                        <button onclick="processExcel()" class="mt-3 w-full bg-slate-900 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors flex justify-center items-center gap-2 shadow-sm">
+                            <i class="ph ph-download-simple"></i> Proses Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bulk Action Card -->
+                <div class="bg-white rounded-2xl shadow-soft border border-slate-200 p-5">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-slate-100 text-slate-700 border border-slate-200 p-2 rounded-lg"><i class="ph ph-lightning text-lg"></i></div>
+                        <div>
+                            <h4 class="font-semibold text-slate-900">Isi Cepat (Bulk Action)</h4>
+                            <p class="text-xs text-slate-500">Terapkan nilai ke baris yang di-blok/pilih</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <input type="text" id="bulk-role" placeholder="Role (Cth: OPR)" class="col-span-1 w-full border border-slate-300 p-2.5 rounded-lg text-sm uppercase focus:ring-2 focus:ring-slate-800 focus:border-slate-800 bg-white shadow-sm">
+                        
+                        <select id="bulk-shift" class="col-span-1 w-full border border-slate-300 p-2.5 rounded-lg text-sm focus:ring-2 focus:ring-slate-800 focus:border-slate-800 bg-white shadow-sm">
+                            <option value="">-- Shift --</option>
+                            <option value="07:00-15:00">Shift 1 (07-15)</option>
+                            <option value="15:00-23:00">Shift 2 (15-23)</option>
+                            <option value="23:00-07:00">Shift 3 (23-07)</option>
+                            <option value="07:00-19:00">Long 1 (07-19)</option>
+                            <option value="19:00-07:00">Long 2 (19-07)</option>
+                        </select>
+
+                        <input type="text" id="bulk-ket" placeholder="Keterangan..." class="col-span-1 w-full border border-slate-300 p-2.5 rounded-lg text-sm focus:ring-2 focus:ring-slate-800 focus:border-slate-800 bg-white shadow-sm">
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="applyBulk('selected')" class="flex-1 bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <i class="ph ph-check-square-offset"></i> Terapkan Terpilih
+                        </button>
+                        <button onclick="applyBulk('all')" class="flex-1 bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
+                            Semua Baris
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-soft border border-slate-200 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-white">
+                    <div>
+                        <h3 class="font-semibold text-slate-900 flex items-center gap-2">
+                            <i class="ph ph-users text-slate-500"></i> Daftar Karyawan Lembur
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">Klik & tahan icon <i class="ph ph-list"></i> lalu seret untuk memilih banyak baris.</p>
+                    </div>
+                    <button onclick="addRow()" class="bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-sm text-sm font-medium transition-all flex items-center gap-2">
+                        <i class="ph ph-plus-circle"></i> Tambah Baris
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left select-none border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-600 border-b border-slate-200">
+                                <th class="py-3 px-2 w-12 text-center text-[10px] font-bold uppercase tracking-wider">Pilih</th>
+                                <th class="py-3 px-3 w-32 text-xs font-semibold uppercase tracking-wider">NIK</th>
+                                <th class="py-3 px-3 text-xs font-semibold uppercase tracking-wider">Nama Lengkap</th>
+                                <th class="py-3 px-3 w-40 text-xs font-semibold uppercase tracking-wider">Bagian/Role</th>
+                                <th class="py-3 px-3 w-28 text-xs font-semibold uppercase tracking-wider text-center">Mulai</th>
+                                <th class="py-3 px-3 w-28 text-xs font-semibold uppercase tracking-wider text-center">Selesai</th>
+                                <th class="py-3 px-3 w-48 text-xs font-semibold uppercase tracking-wider">Keterangan</th>
+                                <th class="py-3 px-2 w-12 text-center text-xs font-semibold"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="karyawan-rows" class="divide-y divide-slate-100">
+                            <!-- Rows injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Submit Action -->
+            <div class="flex justify-end gap-4 pt-4 pb-12">
+                <button onclick="previewForm()" id="btn-preview" type="button" class="bg-white hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-xl font-medium shadow-sm border border-slate-300 transition-all flex items-center gap-2 text-lg hover:-translate-y-0.5">
+                    <i class="ph ph-printer"></i> Preview SPL
+                </button>
+                <button onclick="submitData()" id="btn-submit" class="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-xl font-medium shadow-lg shadow-slate-900/20 transition-all flex items-center gap-2 text-lg hover:-translate-y-0.5 border border-slate-700">
+                    <i class="ph ph-paper-plane-tilt"></i> Kirim Pengajuan
+                </button>
+            </div>
+        </div>
+
+        <!-- View: Loading -->
+        <div id="view-loading" class="no-print hidden-view flex items-center justify-center min-h-[60vh]">
+            <div class="bg-white p-10 rounded-3xl shadow-soft border border-slate-200 text-center max-w-sm w-full relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-slate-100"><div class="h-full bg-slate-900 animate-pulse w-1/2"></div></div>
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 border border-slate-100 mb-6 relative">
+                    <div class="absolute inset-0 rounded-full border-4 border-slate-100 border-t-slate-900 animate-spin"></div>
+                    <i class="ph ph-paper-plane-tilt text-2xl text-slate-800"></i>
+                </div>
+                <h2 id="loading-text" class="text-xl font-bold text-slate-900 mb-2">Memproses Data...</h2>
+                <p class="text-slate-500 text-sm">Sistem sedang memvalidasi dan menyimpan data pengajuan Anda.</p>
+            </div>
+        </div>
+
+        <!-- View: Success -->
+        <div id="view-success" class="no-print hidden-view flex items-center justify-center min-h-[60vh]">
+            <div class="bg-white p-10 rounded-3xl shadow-soft border border-slate-100 text-center max-w-md w-full">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-50 mb-6">
+                    <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <i class="ph ph-check text-4xl text-emerald-600"></i>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800 mb-3">Pengajuan Berhasil</h2>
+                <p id="success-text" class="text-slate-600 mb-8 leading-relaxed">Tindakan berhasil diproses oleh sistem.</p>
+                <div class="space-y-3">
+                    <button onclick="resetApp()" class="w-full bg-slate-800 text-white px-6 py-3 rounded-xl font-medium shadow hover:bg-slate-900 transition-colors">
+                        Kembali ke Beranda
+                    </button>
+                    <button onclick="showHistory()" class="w-full bg-white border border-slate-200 text-slate-700 px-6 py-3 rounded-xl font-medium shadow-sm hover:bg-slate-50 transition-colors">
+                        Lihat Riwayat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- View: History -->
+        <div id="view-history" class="no-print hidden-view space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-soft border border-slate-200">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="ph ph-clock-counter-clockwise text-brand-500"></i> Riwayat Pengajuan SPL
+                    </h2>
+                    <p class="text-slate-500 text-sm mt-1">Pantau status approval dari Surat Perintah Lembur yang telah Anda ajukan.</p>
+                </div>
+                <button onclick="resetApp()" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl font-medium shadow-sm transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i class="ph ph-plus"></i> Buat SPL Baru
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-soft border border-slate-200 overflow-hidden">
+                <div id="history-container" class="divide-y divide-slate-100">
+                    <!-- History items injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Print Preview Container -->
+        <div id="view-print" class="no-print hidden-view max-w-5xl mx-auto space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-soft border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="ph ph-file-text text-brand-500"></i> Preview Dokumen SPL
+                    </h1>
+                    <p class="text-slate-500 text-sm mt-1">Pastikan format cetak sudah sesuai sebelum melakukan pencetakan fisik.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="showView('view-input')" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-xl font-medium shadow-sm transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-arrow-left text-lg"></i> Kembali
+                    </button>
+                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph ph-printer text-lg"></i> Cetak Dokumen
+                    </button>
+                </div>
+            </div>
+            
+            <div id="orientation-info" class="bg-blue-50 text-blue-800 p-4 rounded-xl text-sm border border-blue-100 flex items-start gap-3">
+                <i class="ph ph-info text-xl mt-0.5"></i>
+                <div>
+                    <p class="font-semibold mb-1">Informasi Cetak Form Formal</p>
+                    <p>Status approval digital akan tercetak otomatis. Orientasi kertas akan menyesuaikan jumlah data secara otomatis.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- AREA CETAK KERTAS (Strictly controlled by @media print in CSS) -->
+    <div class="print-container" id="print-area">
+        <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: bold; margin-bottom: 10px;">
+            <div>PT. MAYORA INDAH JAYANTI 2</div>
+            <div>MAY/PRC/LKT.SBU/MBR/RGAxxx/19/004-01-00</div>
+        </div>
+
+        <div style="text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">
+            SURAT PERINTAH LEMBUR KARYAWAN (<span id="print-bagian">...</span>)
+        </div>
+
+        <div style="font-size: 11px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">
+            HARI/TANGGAL : <span id="print-tanggal">...</span>
+        </div>
+
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 3%;">NO</th>
+                    <th rowspan="2" style="width: 8%;">NIK</th>
+                    <th rowspan="2" style="width: 20%;">NAMA</th>
+                    <th rowspan="2" style="width: 10%;">BAGIAN</th>
+                    <th colspan="3">RENCANA</th>
+                    <th colspan="3">REALISASI</th>
+                    <th rowspan="2" style="width: 20%;">KETERANGAN LEMBUR</th>
+                </tr>
+                <tr>
+                    <th style="width: 6%;">MULAI</th>
+                    <th style="width: 6%;">SELESAI</th>
+                    <th style="width: 6%;">TTD</th>
+                    <th style="width: 6%;">MULAI</th>
+                    <th style="width: 6%;">SELESAI</th>
+                    <th style="width: 6%;">TTD</th>
+                </tr>
+            </thead>
+            <tbody id="print-table-body">
+                <!-- Data injected via JS -->
+            </tbody>
+        </table>
+        
+        <div class="ttd-box">
+            <div class="ttd-item">
+                <p>Dibuat Oleh,</p>
+                <div class="ttd-status" id="ttd-sh"></div>
+                <p>( Section Head )</p>
+            </div>
+            <div class="ttd-item">
+                <p>Disetujui Oleh,</p>
+                <div class="ttd-status" id="ttd-dh"></div>
+                <p>( Dept Head )</p>
+            </div>
+            <div class="ttd-item">
+                <p>Diketahui Oleh,</p>
+                <div class="ttd-status" id="ttd-dhci"></div>
+                <p>( DH CI )</p>
+            </div>
+            <div class="ttd-item">
+                <p>Mengetahui,</p>
+                <div class="ttd-status" id="ttd-gdh"></div>
+                <p>( GDH )</p>
+            </div>
+            <div class="ttd-item">
+                <p>Menyetujui,</p>
+                <div class="ttd-status" id="ttd-fm"></div>
+                <p>( Factory Manager )</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 no-print pointer-events-none"></div>
+
+    <script>
+        // MOCK API URL
+        const API_URL = "https://script.google.com/macros/s/AKfycbzQy43Qz1234567890/exec"; 
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const action = urlParams.get('action');
+        const id = urlParams.get('id');
+        const level = urlParams.get('level');
+
+        // Clock Update
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('current-time').innerText = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        }, 1000);
+
+        // Router & Initialization
+        window.onload = function() {
+            setupDragSelection();
+            
+            // Set default date to today
+            document.getElementById('input-tanggal').valueAsDate = new Date();
+
+            if (action === 'approve') {
+                processApproval(id, level);
+            } else if (action === 'print' && id) {
+                loadPrintView(id);
+            } else {
+                showView('view-input');
+                // Initial Rows
+                for(let i=0; i<4; i++) addRow();
+            }
+        };
+
+        function resetApp() {
+            // Menghapus parameter URL jika ada (tanpa me-reload page yang memicu error)
+            if (window.history && window.history.replaceState) {
+                try {
+                    window.history.replaceState({}, document.title, window.location.pathname || '/');
+                } catch(e) { console.log(e); }
+            }
+            
+            // Reset form ke kondisi awal
+            document.getElementById('input-tanggal').valueAsDate = new Date();
+            document.getElementById('input-bagian').value = '';
+            document.getElementById('karyawan-rows').innerHTML = '';
+            for(let i=0; i<4; i++) addRow();
+            
+            // Tampilkan kembali tampilan input
+            showView('view-input');
+        }
+
+        function showView(viewId) {
+            ['view-input', 'view-loading', 'view-success', 'view-print', 'view-history'].forEach(id => {
+                document.getElementById(id).classList.add('hidden-view');
+            });
+            document.getElementById(viewId).classList.remove('hidden-view');
+            
+            // Manage print area visibility based on current view
+            if(viewId === 'view-print') {
+                document.getElementById('print-area').style.display = 'block';
+            } else {
+                document.getElementById('print-area').style.display = 'none';
+            }
+        }
+
+        function addRow(data = {}) {
+            const tbody = document.getElementById('karyawan-rows');
+            const tr = document.createElement('tr');
+            tr.setAttribute('data-selected', 'false');
+            tr.className = 'transition-colors duration-200 group bg-white hover:bg-slate-50/80';
+            
+            tr.innerHTML = `
+                <td class="py-2 px-2 border-b border-slate-100 text-center drag-handle cursor-ns-resize" title="Klik & seret untuk memilih">
+                    <i class="ph ph-list text-lg"></i>
+                </td>
+                <td class="py-2 px-1 border-b border-slate-100">
+                    <input type="text" class="nik table-input font-mono text-slate-700" placeholder="NIK" value="${data.nik || ''}">
+                </td>
+                <td class="py-2 px-1 border-b border-slate-100">
+                    <input type="text" class="nama table-input uppercase font-medium text-slate-700" placeholder="Nama Karyawan" value="${data.nama || ''}">
+                </td>
+                <td class="py-2 px-1 border-b border-slate-100">
+                    <input type="text" class="role table-input uppercase text-slate-600" placeholder="Dept/Role" value="${data.role || ''}">
+                </td>
+                <td class="py-2 px-1 border-b border-slate-100">
+                    <input type="time" class="mulai table-input text-center text-slate-600" value="${data.mulai || '07:00'}">
+                </td>
+                <td class="py-2 px-1 border-b border-slate-100">
+                    <input type="time" class="selesai table-input text-center text-slate-600" value="${data.selesai || '15:00'}">
+                </td>
+                <td class="py-2 px-1 border-b border-slate-100">
+                    <input type="text" class="ket table-input text-slate-600" placeholder="Alasan lembur..." value="${data.ket || ''}">
+                </td>
+                <td class="py-2 px-2 border-b border-slate-100 text-center">
+                    <button onclick="removeRow(this)" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-300 hover:bg-red-50 hover:text-red-500 transition-colors mx-auto" title="Hapus baris">
+                        <i class="ph ph-trash text-lg"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function removeRow(btn) {
+            const tr = btn.closest('tr');
+            tr.style.opacity = '0';
+            tr.style.transform = 'translateX(-10px)';
+            tr.style.transition = 'all 0.2s';
+            setTimeout(() => tr.remove(), 200);
+        }
+
+        function togglePaste() {
+            const box = document.getElementById('paste-box');
+            const icon = document.getElementById('excel-chevron');
+            if(box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                box.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function processExcel() {
+            const text = document.getElementById('excel-data').value;
+            if(!text.trim()) {
+                showToast("Kotak teks masih kosong. Paste data terlebih dahulu.", "warning");
+                return;
+            }
+
+            const rows = text.split('\n');
+            let addedCount = 0;
+
+            rows.forEach(row => {
+                const cols = row.split('\t');
+                if(cols.length >= 2 && cols[0].trim() !== '') { 
+                    addRow({
+                        nik: cols[0] ? cols[0].trim() : '',
+                        nama: cols[1] ? cols[1].trim() : '',
+                        role: cols[2] ? cols[2].trim() : '',
+                        mulai: cols[3] && cols[3].includes(':') ? cols[3].trim() : '07:00',
+                        selesai: cols[4] && cols[4].includes(':') ? cols[4].trim() : '15:00',
+                        ket: cols[5] ? cols[5].trim() : ''
+                    });
+                    addedCount++;
+                }
+            });
+
+            document.getElementById('excel-data').value = '';
+            togglePaste();
+            
+            // Cleanup initial empty rows
+            const existingRows = document.getElementById('karyawan-rows').querySelectorAll('tr');
+            existingRows.forEach(r => {
+                if(r.querySelector('.nik').value.trim() === '') r.remove();
+            });
+
+            if(addedCount > 0) {
+                showToast(`Berhasil memuat ${addedCount} data karyawan.`, "success");
+            } else {
+                showToast("Format data tidak sesuai, gagal memuat.", "error");
+            }
+        }
+
+        let isDragging = false;
+        let setSelectionMode = true;
+
+        function setupDragSelection() {
+            const tbody = document.getElementById('karyawan-rows');
+            
+            tbody.addEventListener('mousedown', (e) => {
+                if(['INPUT', 'BUTTON', 'SELECT'].includes(e.target.tagName) || e.target.closest('button')) return;
+                
+                const tr = e.target.closest('tr');
+                if(!tr) return;
+
+                isDragging = true;
+                setSelectionMode = tr.getAttribute('data-selected') !== 'true'; 
+                toggleSelection(tr, setSelectionMode);
+                e.preventDefault();
+            });
+
+            tbody.addEventListener('mouseover', (e) => {
+                if(!isDragging) return;
+                if(['INPUT', 'BUTTON', 'SELECT'].includes(e.target.tagName) || e.target.closest('button')) return;
+                
+                const tr = e.target.closest('tr');
+                if(tr) toggleSelection(tr, setSelectionMode);
+            });
+
+            document.addEventListener('mouseup', () => { isDragging = false; });
+        }
+
+        function toggleSelection(tr, isSelected) {
+            tr.setAttribute('data-selected', isSelected ? 'true' : 'false');
+            if(isSelected) {
+                tr.classList.add('row-selected');
+                tr.querySelector('.drag-handle i').classList.replace('ph-list', 'ph-check-circle');
+            } else {
+                tr.classList.remove('row-selected');
+                tr.querySelector('.drag-handle i').classList.replace('ph-check-circle', 'ph-list');
+            }
+        }
+
+        function applyBulk(mode) {
+            const bulkRole = document.getElementById('bulk-role').value;
+            const bulkKet = document.getElementById('bulk-ket').value;
+            const bulkShift = document.getElementById('bulk-shift').value;
+
+            if (!bulkRole && !bulkKet && !bulkShift) {
+                showToast("Pilih/isi minimal satu kolom untuk diterapkan.", "warning");
+                return;
+            }
+
+            let jamMulai = "", jamSelesai = "";
+            if (bulkShift) {
+                [jamMulai, jamSelesai] = bulkShift.split('-');
+            }
+
+            const rows = document.getElementById('karyawan-rows').querySelectorAll('tr');
+            let count = 0;
+            
+            rows.forEach(r => {
+                const isSelected = r.getAttribute('data-selected') === 'true';
+                const nik = r.querySelector('.nik').value;
+                
+                if ((mode === 'all' || isSelected) && nik.trim() !== '') { 
+                    if (bulkRole) r.querySelector('.role').value = bulkRole;
+                    if (bulkKet) r.querySelector('.ket').value = bulkKet;
+                    if (bulkShift) {
+                        r.querySelector('.mulai').value = jamMulai;
+                        r.querySelector('.selesai').value = jamSelesai;
+                    }
+                    
+                    // Flash effect to show it updated
+                    r.style.transition = 'background-color 0.3s';
+                    const origBg = r.style.backgroundColor;
+                    r.style.backgroundColor = '#f1f5f9'; // slate-100 flash
+                    setTimeout(() => { r.style.backgroundColor = origBg; }, 300);
+                    
+                    count++;
+                }
+            });
+
+            if (count > 0) {
+                rows.forEach(r => toggleSelection(r, false)); // unselect all
+                showToast(`Data diterapkan ke ${count} karyawan.`, "success");
+            } else {
+                showToast(mode === 'selected' ? "Blok baris karyawan terlebih dahulu (drag icon)." : "Tidak ada baris yang valid.", "warning");
+            }
+        }
+
+        function submitData() {
+            const tgl = document.getElementById('input-tanggal').value;
+            const bag = document.getElementById('input-bagian').value;
+            
+            if(!tgl || !bag) {
+                 showToast("Lengkapi form Tanggal dan Bagian.", "error");
+                 return;
+            }
+
+            let dataKaryawan = [];
+            document.getElementById('karyawan-rows').querySelectorAll('tr').forEach(r => {
+                const nik = r.querySelector('.nik').value;
+                if(nik.trim() !== '') {
+                    dataKaryawan.push({
+                        nik: nik,
+                        nama: r.querySelector('.nama').value,
+                        role: r.querySelector('.role').value,
+                        mulai: r.querySelector('.mulai').value,
+                        selesai: r.querySelector('.selesai').value,
+                        ket: r.querySelector('.ket').value
+                    });
+                }
+            });
+
+            if(dataKaryawan.length === 0) {
+                showToast("Data karyawan tidak boleh kosong.", "error"); 
+                return;
+            }
+
+            const payload = { tanggal: tgl, bagian: bag, karyawan: dataKaryawan };
+            
+            showView('view-loading');
+            document.getElementById('loading-text').innerText = "Mengirim Pengajuan...";
+
+            // Simulate API Call
+            setTimeout(() => {
+                showView('view-success');
+                document.getElementById('success-text').innerHTML = "Pengajuan SPL berhasil dikirim.<br>Menunggu approval tahap selanjutnya.";
+                console.log("Mock Payload Sent:", payload);
+            }, 1500);
+
+            /* Real API Call Setup
+            fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(data => { showView('view-success'); })
+            .catch(err => { ... });
+            */
+        }
+
+        function previewForm() {
+            const tgl = document.getElementById('input-tanggal').value;
+            const bag = document.getElementById('input-bagian').value;
+            
+            if(!tgl || !bag) {
+                 showToast("Lengkapi form Tanggal dan Bagian untuk melihat preview.", "warning");
+                 return;
+            }
+
+            let dataKaryawan = [];
+            document.getElementById('karyawan-rows').querySelectorAll('tr').forEach(r => {
+                const nik = r.querySelector('.nik').value;
+                if(nik.trim() !== '') {
+                    dataKaryawan.push({
+                        nik: nik,
+                        nama: r.querySelector('.nama').value,
+                        role: r.querySelector('.role').value,
+                        mulai: r.querySelector('.mulai').value,
+                        selesai: r.querySelector('.selesai').value,
+                        ket: r.querySelector('.ket').value
+                    });
+                }
+            });
+
+            if(dataKaryawan.length === 0) {
+                showToast("Data karyawan tidak boleh kosong.", "warning"); 
+                return;
+            }
+
+            const previewData = {
+                tanggal: tgl, 
+                bagian: bag, 
+                karyawan: dataKaryawan,
+                status: { SH: "DRAFT", DH: "DRAFT", DHCI: "DRAFT", GDH: "DRAFT", FM: "DRAFT" }
+            };
+            
+            renderPrintView(previewData);
+            showToast("Menampilkan preview dokumen...", "info");
+        }
+
+        function processApproval(id, level) {
+            showView('view-loading');
+            document.getElementById('loading-text').innerText = `Memverifikasi Otoritas ${level}...`;
+
+            // Simulate API Approval
+            setTimeout(() => {
+                showView('view-success');
+                document.getElementById('success-text').innerHTML = `Dokumen telah <b>Disetujui</b> oleh ${level}.<br>Notifikasi otomatis telah dikirim.`;
+            }, 1500);
+        }
+
+        function loadPrintView(id) {
+            showView('view-loading');
+            document.getElementById('loading-text').innerText = "Menyiapkan Dokumen Cetak...";
+
+            // Simulate Fetching Data
+            setTimeout(() => {
+                const mockData = {
+                    tanggal: "2026-10-12", bagian: "PRODUKSI",
+                    karyawan: [
+                        {nik: "103915", nama: "MAULANA MALIK IBRAHIM", role: "UI 1", mulai: "07:00", selesai: "15:00", ket: "Persiapan Audit"},
+                        {nik: "128206", nama: "BAYU DERMAWAN", role: "LEADER", mulai: "07:00", selesai: "15:00", ket: ""},
+                        {nik: "135501", nama: "SITI AMINAH", role: "PACKING", mulai: "15:00", selesai: "23:00", ket: "Target Produksi"}
+                    ],
+                    status: { SH: "Approved\n12/10 06:00", DH: "Approved\n12/10 08:30", DHCI: "Approved\n12/10 09:15", GDH: "Pending", FM: "Pending" }
+                };
+                renderPrintView(mockData);
+            }, 1000);
+        }
+
+        function renderPrintView(data) {
+            let pageStyle = document.getElementById('dynamic-page-style');
+            if (!pageStyle) {
+                pageStyle = document.createElement('style');
+                pageStyle.id = 'dynamic-page-style';
+                document.head.appendChild(pageStyle);
+            }
+            
+            const MAX_LANDSCAPE_ROWS = 15;
+            const orientationInfo = document.getElementById('orientation-info');
+            
+            // Logika Otomatis Portrait jika melebihi batas Landscape
+            if (data.karyawan.length > MAX_LANDSCAPE_ROWS) {
+                pageStyle.innerHTML = `
+                    @media print { 
+                        @page { size: A4 portrait; } 
+                        .print-table { font-size: 10px; }
+                        .print-table th, .print-table td { padding: 3px 2px; }
+                        .ttd-box { font-size: 10px; margin-top: 15px; }
+                        .ttd-status { margin: 10px 0; min-height: 25px; }
+                    }
+                `;
+                orientationInfo.innerHTML = '<i class="ph ph-arrows-out-line-vertical text-xl mt-0.5"></i><div><p class="font-semibold mb-1">Mode Cetak: Potrait (Otomatis)</p><p>Sistem mengalihkan ke mode <b>Potrait</b> karena jumlah karyawan (' + data.karyawan.length + ' baris) melebihi batas Landscape (' + MAX_LANDSCAPE_ROWS + ' baris). Setelan printer Anda mungkin perlu disesuaikan ke Portrait.</p></div>';
+                orientationInfo.className = "bg-amber-50 text-amber-800 p-4 rounded-xl text-sm border border-amber-200 flex items-start gap-3";
+            } else {
+                pageStyle.innerHTML = `
+                    @media print { 
+                        @page { size: A4 landscape; } 
+                    }
+                `;
+                orientationInfo.innerHTML = '<i class="ph ph-arrows-out-line-horizontal text-xl mt-0.5"></i><div><p class="font-semibold mb-1">Mode Cetak: Landscape</p><p>Jumlah data normal (≤ ' + MAX_LANDSCAPE_ROWS + ' baris). Sistem menggunakan format <b>Landscape</b>. Pastikan pengaturan printer Anda sesuai.</p></div>';
+                orientationInfo.className = "bg-blue-50 text-blue-800 p-4 rounded-xl text-sm border border-blue-100 flex items-start gap-3";
+            }
+
+            document.getElementById('print-tanggal').innerText = new Date(data.tanggal).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('print-bagian').innerText = data.bagian;
+            
+            const ids = ['sh', 'dh', 'dhci', 'gdh', 'fm'];
+            ids.forEach(key => {
+                const val = data.status[key.toUpperCase()];
+                document.getElementById(`ttd-${key}`).innerText = val !== "Pending" ? val : "";
+            });
+
+            const printBody = document.getElementById('print-table-body');
+            let printHtml = '';
+            
+            data.karyawan.forEach((row, index) => {
+                printHtml += `
+                    <tr style="height: 28px;">
+                        <td>${index + 1}</td>
+                        <td>${row.nik}</td>
+                        <td style="text-align: left; padding-left: 6px;">${row.nama}</td>
+                        <td>${row.role}</td>
+                        <td>${row.mulai}</td>
+                        <td>${row.selesai}</td>
+                        <td></td> 
+                        <td>${row.mulai}</td>
+                        <td>${row.selesai}</td>
+                        <td></td> 
+                        <td style="text-align: left; padding-left: 6px;">${row.ket}</td>
+                    </tr>
+                `;
+            });
+
+            const minRows = 15;
+            for(let i = data.karyawan.length; i < minRows; i++) {
+                printHtml += `<tr style="height: 28px;"><td>${i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+
+            printBody.innerHTML = printHtml;
+            showView('view-print');
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            // Define styles based on type
+            const styles = {
+                success: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-800', icon: 'ph-check-circle text-emerald-500' },
+                error: { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-800', icon: 'ph-warning-circle text-red-500' },
+                warning: { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-800', icon: 'ph-warning text-amber-500' },
+                info: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-800', icon: 'ph-info text-blue-500' }
+            };
+            const s = styles[type] || styles.info;
+
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl border shadow-lg pointer-events-auto toast-enter ${s.bg} ${s.border}`;
+            toast.innerHTML = `
+                <i class="ph ${s.icon} text-xl"></i>
+                <span class="text-sm font-medium ${s.text}">${message}</span>
+                <button onclick="this.parentElement.remove()" class="ml-2 text-slate-400 hover:text-slate-600 transition-colors">
+                    <i class="ph ph-x"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto remove after 3.5 seconds
+            setTimeout(() => {
+                if(toast.parentElement) {
+                    toast.classList.replace('toast-enter', 'toast-exit');
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 3500);
+        }
+
+        function showHistory() {
+            showView('view-loading');
+            document.getElementById('loading-text').innerText = "Memuat Riwayat...";
+
+            // Simulate API fetch
+            setTimeout(() => {
+                renderHistoryItems();
+                showView('view-history');
+            }, 800);
+        }
+
+        function renderHistoryItems() {
+            const container = document.getElementById('history-container');
+            
+            // Mock History Data (Simulasi dari Database/Apps Script)
+            const mockHistory = [
+                { id: "SPL-MAY-1026-004", tgl: "12 Okt 2026", bag: "PRODUKSI", jml: 15, status: "pending_dhci", date_created: "11 Okt 2026 09:30" },
+                { id: "SPL-MAY-1026-003", tgl: "10 Okt 2026", bag: "PRODUKSI", jml: 5, status: "approved", date_created: "09 Okt 2026 14:15" },
+                { id: "SPL-MAY-1026-002", tgl: "05 Okt 2026", bag: "QC / QA", jml: 8, status: "rejected_fm", date_created: "04 Okt 2026 10:00" },
+            ];
+
+            if(mockHistory.length === 0) {
+                container.innerHTML = `<div class="p-10 text-center text-slate-500 font-medium">Belum ada riwayat pengajuan.</div>`;
+                return;
+            }
+
+            let html = '';
+            mockHistory.forEach(item => {
+                
+                // Menentukan Level Approval
+                // Urutan: Dibuat -> SH -> DH -> DHCI -> GDH -> FM
+                const steps = [
+                    { label: "Dibuat", state: "done" },
+                    { label: "SH", state: ["approved", "pending_dhci", "rejected_fm"].includes(item.status) ? "done" : "active" },
+                    { label: "DH", state: ["approved", "pending_dhci", "rejected_fm"].includes(item.status) ? "done" : "pending" },
+                    { label: "DH CI", state: item.status === "approved" || item.status === "rejected_fm" ? "done" : (item.status === "pending_dhci" ? "active" : "pending") },
+                    { label: "GDH", state: item.status === "approved" || item.status === "rejected_fm" ? "done" : "pending" },
+                    { label: "FM", state: item.status === "approved" ? "done" : (item.status === "rejected_fm" ? "rejected" : "pending") }
+                ];
+
+                let stepperHtml = '<div class="flex items-center w-full mt-4 overflow-hidden relative pb-4">';
+                steps.forEach((step, index) => {
+                    let colorClass = "bg-white text-slate-300 border-slate-200"; // pending
+                    let icon = "ph-circle";
+                    
+                    if (step.state === "done") {
+                        colorClass = "bg-emerald-500 border-emerald-500 text-white shadow-md shadow-emerald-500/20";
+                        icon = "ph-check-bold";
+                    } else if (step.state === "active") {
+                        colorClass = "bg-brand-500 border-brand-500 text-white animate-pulse shadow-md shadow-brand-500/20";
+                        icon = "ph-dots-three-bold";
+                    } else if (step.state === "rejected") {
+                        colorClass = "bg-red-500 border-red-500 text-white shadow-md shadow-red-500/20";
+                        icon = "ph-x-bold";
+                    }
+
+                    stepperHtml += `
+                        <div class="relative flex flex-col items-center flex-1">
+                            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center z-10 ${colorClass}">
+                                <i class="ph ${icon} text-sm"></i>
+                            </div>
+                            <span class="absolute top-10 text-[10px] font-bold text-slate-600 uppercase tracking-wider text-center w-full">${step.label}</span>
+                            ${index < steps.length - 1 ? `<div class="absolute top-4 left-[50%] w-full h-0.5 ${step.state === 'done' ? 'bg-emerald-400' : 'bg-slate-200'} -z-0"></div>` : ''}
+                        </div>
+                    `;
+                });
+                stepperHtml += '</div>';
+
+                // Label Badge Status
+                let badge = '';
+                if(item.status.includes('pending')) badge = `<span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold border border-amber-200 shadow-sm flex items-center gap-1"><i class="ph ph-hourglass-high"></i> Menunggu Approval</span>`;
+                else if(item.status === 'approved') badge = `<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold border border-emerald-200 shadow-sm flex items-center gap-1"><i class="ph ph-check-circle"></i> Disetujui Penuh</span>`;
+                else if(item.status.includes('rejected')) badge = `<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold border border-red-200 shadow-sm flex items-center gap-1"><i class="ph ph-x-circle"></i> Ditolak</span>`;
+
+                html += `
+                    <div class="p-6 hover:bg-slate-50 transition-colors">
+                        <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-4">
+                            <div>
+                                <div class="flex flex-wrap items-center gap-3 mb-2">
+                                    <h3 class="font-bold text-lg text-slate-900">${item.id}</h3>
+                                    ${badge}
+                                </div>
+                                <div class="text-sm text-slate-500 flex flex-wrap items-center gap-x-4 gap-y-2">
+                                    <span class="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md"><i class="ph ph-calendar-blank text-slate-400"></i> Lembur: ${item.tgl}</span>
+                                    <span class="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md"><i class="ph ph-buildings text-slate-400"></i> ${item.bag}</span>
+                                    <span class="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md"><i class="ph ph-users text-slate-400"></i> ${item.jml} Karyawan</span>
+                                </div>
+                            </div>
+                            <div class="text-left lg:text-right">
+                                <div class="text-xs text-slate-400 mb-3"><i class="ph ph-clock mr-1"></i>Diajukan: ${item.date_created}</div>
+                                <button onclick="loadPrintView('${item.id}')" class="text-brand-700 hover:text-white font-semibold text-sm flex items-center gap-2 bg-brand-50 hover:bg-brand-600 px-4 py-2 rounded-xl transition-all border border-brand-200 hover:border-brand-600 w-full justify-center lg:w-auto">
+                                    <i class="ph ph-file-text text-lg"></i> Lihat Dokumen
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Track/Stepper -->
+                        <div class="bg-white rounded-xl p-5 border border-slate-200 mt-2 shadow-inner-soft">
+                            <p class="text-[11px] font-bold text-slate-400 mb-4 tracking-wider uppercase">Jejak Persetujuan (Approval Tracker)</p>
+                            ${stepperHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
