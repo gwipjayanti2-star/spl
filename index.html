@@ -70,9 +70,9 @@
             width: 100%;
             background-color: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem; 
+            border-radius: 0.375rem;
+            padding: 0.375rem 0.5rem;
+            font-size: 0.75rem; 
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .table-input:hover { background-color: #ffffff; border-color: #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
@@ -150,31 +150,31 @@
     
     <nav class="bg-maroon-shine shadow-glow border-b border-maroon-700/50 sticky top-0 z-40 no-print">
         <div class="w-full max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-4">
-                    <div class="bg-white/10 backdrop-blur-md text-gold-400 p-2.5 rounded-xl shadow-inner-shine border border-white/20">
-                        <i class="ph-duotone ph-buildings text-2xl"></i>
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/10 backdrop-blur-md text-gold-400 p-2 rounded-lg shadow-inner-shine border border-white/20">
+                        <i class="ph-duotone ph-buildings text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="font-extrabold text-xl text-white tracking-tight leading-tight">Sistem SPL Proses Biskuit</h1>
-                        <p class="text-[11px] text-maroon-200 font-bold tracking-widest uppercase mt-0.5 flex items-center gap-1">
+                        <h1 class="font-bold text-lg text-white tracking-tight leading-tight">Sistem SPL Proses Biskuit</h1>
+                        <p class="text-[10px] text-maroon-200 font-bold tracking-widest uppercase flex items-center gap-1">
                             <i class="ph-fill ph-medal text-gold-400"></i> PT. Mayora Indah
                         </p>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 sm:gap-5">
-                    <button id="btn-install" class="hidden flex text-[11px] sm:text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 px-4 sm:px-5 py-2.5 rounded-xl transition-all shadow-lg items-center gap-2">
-                        <i class="ph-duotone ph-download-simple text-lg"></i> <span class="hidden sm:inline">Install App</span>
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <button id="btn-install" class="hidden flex text-[11px] sm:text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 px-3 sm:px-4 py-2 rounded-lg transition-all shadow-md items-center gap-2">
+                        <i class="ph-duotone ph-download-simple text-base"></i> <span class="hidden sm:inline">Install App</span>
                     </button>
-                    <button onclick="showHistory()" class="flex text-[11px] sm:text-sm font-bold text-maroon-50 hover:text-white bg-white/5 hover:bg-white/20 border border-white/10 px-4 sm:px-5 py-2.5 rounded-xl transition-all items-center gap-2 backdrop-blur-sm">
-                        <i class="ph-duotone ph-clock-counter-clockwise text-lg"></i> <span class="hidden sm:inline">Riwayat</span>
+                    <button onclick="showHistory()" class="flex text-[11px] sm:text-xs font-bold text-maroon-50 hover:text-white bg-white/5 hover:bg-white/20 border border-white/10 px-3 sm:px-4 py-2 rounded-lg transition-all items-center gap-2 backdrop-blur-sm">
+                        <i class="ph-duotone ph-clock-counter-clockwise text-base"></i> <span class="hidden sm:inline">Riwayat</span>
                     </button>
-                    <button onclick="resetApp()" class="flex text-[11px] sm:text-sm font-bold text-maroon-900 bg-gradient-to-b from-white to-maroon-50 hover:to-white border border-transparent px-4 sm:px-5 py-2.5 rounded-xl transition-all shadow-lg items-center gap-2">
-                        <i class="ph-duotone ph-plus-circle text-lg"></i> <span class="hidden sm:inline">Buat Baru</span>
+                    <button onclick="resetApp()" class="flex text-[11px] sm:text-xs font-bold text-maroon-900 bg-gradient-to-b from-white to-maroon-50 hover:to-white border border-transparent px-3 sm:px-4 py-2 rounded-lg transition-all shadow-md items-center gap-2">
+                        <i class="ph-duotone ph-plus-circle text-base"></i> <span class="hidden sm:inline">Buat Baru</span>
                     </button>
-                    <div class="hidden md:flex flex-col text-right ml-4 border-l border-maroon-700/50 pl-5">
-                        <span class="text-[10px] text-maroon-300 font-bold uppercase tracking-wider">Waktu Sistem</span>
-                        <span class="text-sm text-white font-bold flex items-center justify-end gap-1.5">
+                    <div class="hidden md:flex flex-col text-right ml-3 border-l border-maroon-700/50 pl-4">
+                        <span class="text-[9px] text-maroon-300 font-bold uppercase tracking-wider">Waktu Sistem</span>
+                        <span class="text-xs text-white font-bold flex items-center justify-end gap-1">
                             <i class="ph-duotone ph-clock"></i> <span id="current-time"></span>
                         </span>
                     </div>
@@ -183,110 +183,109 @@
         </div>
     </nav>
 
-    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative">
         
         <!-- View: Input Form -->
-        <div id="view-input" class="no-print hidden-view space-y-8">
+        <div id="view-input" class="no-print hidden-view space-y-6">
             
             <!-- Header Card with Stage Selection -->
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-8 rounded-3xl shadow-elegant border border-maroon-50 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-maroon-50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 bg-white p-6 rounded-2xl shadow-elegant border border-maroon-50 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-maroon-50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
                 <div>
-                    <h2 class="text-3xl font-extrabold text-slate-800 flex items-center gap-3 tracking-tight">
-                        <div class="bg-maroon-100 text-maroon-700 p-2 rounded-xl"><i class="ph-duotone ph-file-text"></i></div>
+                    <h2 class="text-2xl font-extrabold text-slate-800 flex items-center gap-2.5 tracking-tight">
+                        <div class="bg-maroon-100 text-maroon-700 p-1.5 rounded-lg"><i class="ph-duotone ph-file-text"></i></div>
                         Form Pengajuan Lembur
                     </h2>
-                    <p class="text-slate-500 text-sm mt-2 ml-14 font-medium">Lengkapi data operasional lembur karyawan Proses Biskuit di bawah ini.</p>
+                    <p class="text-slate-500 text-xs mt-1.5 ml-11 font-medium">Lengkapi data operasional lembur karyawan Proses Biskuit di bawah ini.</p>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-5">
-                    <div class="w-full sm:w-40">
-                        <label class="block text-xs font-bold text-maroon-800 uppercase tracking-wider mb-2">Stage</label>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="w-full sm:w-36">
+                        <label class="block text-[10px] font-bold text-maroon-800 uppercase tracking-wider mb-1.5">Stage</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-maroon-400 group-focus-within:text-maroon-700 transition-colors">
-                                <i class="ph-duotone ph-map-pin-line text-lg"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-maroon-400 group-focus-within:text-maroon-700 transition-colors">
+                                <i class="ph-duotone ph-map-pin-line text-base"></i>
                             </div>
-                            <!-- NEW STAGE SELECTOR -->
-                            <select id="input-stage" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-sm text-slate-800 font-bold outline-none cursor-pointer hover:bg-white appearance-none">
+                            <select id="input-stage" class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-sm text-slate-800 font-bold outline-none cursor-pointer hover:bg-white appearance-none">
                                 <option value="Stage 1">Stage 1</option>
                                 <option value="Stage 2">Stage 2</option>
                             </select>
-                            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-                                <i class="ph-bold ph-caret-down"></i>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                <i class="ph-bold ph-caret-down text-xs"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="w-full sm:w-44">
-                        <label class="block text-xs font-bold text-maroon-800 uppercase tracking-wider mb-2">Tanggal Lembur</label>
+                    <div class="w-full sm:w-40">
+                        <label class="block text-[10px] font-bold text-maroon-800 uppercase tracking-wider mb-1.5">Tanggal Lembur</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-maroon-400 group-focus-within:text-maroon-700 transition-colors">
-                                <i class="ph-duotone ph-calendar-blank text-lg"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-maroon-400 group-focus-within:text-maroon-700 transition-colors">
+                                <i class="ph-duotone ph-calendar-blank text-base"></i>
                             </div>
-                            <input type="date" id="input-tanggal" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-sm text-slate-800 font-bold outline-none cursor-pointer hover:bg-white">
+                            <input type="date" id="input-tanggal" class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-sm text-slate-800 font-bold outline-none cursor-pointer hover:bg-white">
                         </div>
                     </div>
-                    <div class="w-full sm:w-56">
-                        <label class="block text-xs font-bold text-maroon-800 uppercase tracking-wider mb-2">Bagian / Dept</label>
+                    <div class="w-full sm:w-48">
+                        <label class="block text-[10px] font-bold text-maroon-800 uppercase tracking-wider mb-1.5">Bagian / Dept</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-maroon-400 group-focus-within:text-maroon-700 transition-colors">
-                                <i class="ph-duotone ph-factory text-lg"></i>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-maroon-400 group-focus-within:text-maroon-700 transition-colors">
+                                <i class="ph-duotone ph-factory text-base"></i>
                             </div>
-                            <input type="text" id="input-bagian" placeholder="PROSES BISKUIT" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm uppercase focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-sm text-slate-800 font-bold outline-none hover:bg-white">
+                            <input type="text" id="input-bagian" placeholder="PROSES BISKUIT" class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs uppercase focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-sm text-slate-800 font-bold outline-none hover:bg-white">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 <!-- Excel Paste Card -->
-                <div class="bg-white rounded-3xl shadow-elegant border border-maroon-50 overflow-hidden flex flex-col">
-                    <button onclick="togglePaste()" class="w-full flex items-center justify-between p-6 hover:bg-slate-50/50 transition-colors group">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-emerald-50 text-emerald-600 border border-emerald-100 p-3 rounded-2xl group-hover:scale-105 transition-transform shadow-sm">
-                                <i class="ph-duotone ph-microsoft-excel-logo text-2xl"></i>
+                <div class="bg-white rounded-2xl shadow-elegant border border-maroon-50 overflow-hidden flex flex-col">
+                    <button onclick="togglePaste()" class="w-full flex items-center justify-between p-5 hover:bg-slate-50/50 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-emerald-50 text-emerald-600 border border-emerald-100 p-2 rounded-xl group-hover:scale-105 transition-transform shadow-sm">
+                                <i class="ph-duotone ph-microsoft-excel-logo text-xl"></i>
                             </div>
                             <div class="text-left">
-                                <h4 class="font-bold text-slate-800 text-lg">Import dari Excel</h4>
-                                <p class="text-xs text-slate-500 font-medium">Copy dari spreadsheet & Paste di sini</p>
+                                <h4 class="font-bold text-slate-800 text-sm">Import dari Excel</h4>
+                                <p class="text-[11px] text-slate-500 font-medium">Copy dari spreadsheet & Paste di sini</p>
                             </div>
                         </div>
-                        <div class="bg-slate-100 p-2 rounded-full text-slate-400 group-hover:bg-slate-200 group-hover:text-slate-600 transition-colors">
-                            <i id="excel-chevron" class="ph-bold ph-caret-down"></i>
+                        <div class="bg-slate-100 p-1.5 rounded-full text-slate-400 group-hover:bg-slate-200 group-hover:text-slate-600 transition-colors">
+                            <i id="excel-chevron" class="ph-bold ph-caret-down text-sm"></i>
                         </div>
                     </button>
                     
-                    <div id="paste-box" class="hidden px-6 pb-6 border-t border-slate-100 pt-5 bg-slate-50/50 flex-1">
-                        <div class="text-[11px] text-slate-600 mb-4 bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2">
-                            <i class="ph-fill ph-info text-blue-500 text-lg"></i>
+                    <div id="paste-box" class="hidden px-5 pb-5 border-t border-slate-100 pt-4 bg-slate-50/50 flex-1">
+                        <div class="text-[10px] text-slate-600 mb-3 bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm flex items-center gap-2">
+                            <i class="ph-fill ph-info text-blue-500 text-base"></i>
                             <span><strong class="text-maroon-800">Format:</strong> NIK | NAMA | ROLE | JAM MULAI | JAM SELESAI | KET</span>
                         </div>
-                        <textarea id="excel-data" rows="3" class="w-full border border-slate-200 p-4 rounded-2xl text-sm focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-inner outline-none resize-y font-mono bg-white" placeholder="Paste (Ctrl+V) data excel di sini..."></textarea>
-                        <button onclick="processExcel()" class="mt-4 w-full bg-slate-800 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-slate-900 transition-colors flex justify-center items-center gap-2 shadow-md">
+                        <textarea id="excel-data" rows="3" class="w-full border border-slate-200 p-3 rounded-xl text-xs focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 transition-all shadow-inner outline-none resize-y font-mono bg-white" placeholder="Paste (Ctrl+V) data excel di sini..."></textarea>
+                        <button onclick="processExcel()" class="mt-3 w-full bg-slate-800 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-slate-900 transition-colors flex justify-center items-center gap-2 shadow-sm">
                             <i class="ph-bold ph-magic-wand"></i> Ekstrak Data
                         </button>
                     </div>
                 </div>
 
                 <!-- Bulk Action Card -->
-                <div class="bg-white rounded-3xl shadow-elegant border border-maroon-50 p-6 flex flex-col justify-between">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="bg-gold-50 text-gold-500 border border-gold-100 p-3 rounded-2xl shadow-sm">
-                            <i class="ph-duotone ph-lightning text-2xl"></i>
+                <div class="bg-white rounded-2xl shadow-elegant border border-maroon-50 p-5 flex flex-col justify-between">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-gold-50 text-gold-500 border border-gold-100 p-2 rounded-xl shadow-sm">
+                            <i class="ph-duotone ph-lightning text-xl"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-800 text-lg">Isi Cepat (Bulk Action)</h4>
-                            <p class="text-xs text-slate-500 font-medium">Terapkan Role/Shift ke banyak baris sekaligus</p>
+                            <h4 class="font-bold text-slate-800 text-sm">Isi Cepat (Bulk Action)</h4>
+                            <p class="text-[11px] text-slate-500 font-medium">Terapkan Role/Shift ke banyak baris sekaligus</p>
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"><i class="ph-duotone ph-user-gear"></i></div>
-                            <input type="text" id="bulk-role" placeholder="Role (Cth: MIXER)" class="w-full pl-9 pr-3 py-3 border border-slate-200 rounded-xl text-sm uppercase focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 bg-slate-50 hover:bg-white transition-colors font-bold text-slate-700 outline-none">
+                            <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400"><i class="ph-duotone ph-user-gear text-sm"></i></div>
+                            <input type="text" id="bulk-role" placeholder="Role (Cth: MIXER)" class="w-full pl-8 pr-2.5 py-2 border border-slate-200 rounded-lg text-xs uppercase focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 bg-slate-50 hover:bg-white transition-colors font-bold text-slate-700 outline-none">
                         </div>
                         
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"><i class="ph-duotone ph-clock"></i></div>
-                            <select id="bulk-shift" class="w-full pl-9 pr-3 py-3 border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 bg-slate-50 hover:bg-white transition-colors font-bold text-slate-700 outline-none appearance-none">
+                            <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400"><i class="ph-duotone ph-clock text-sm"></i></div>
+                            <select id="bulk-shift" class="w-full pl-8 pr-2.5 py-2 border border-slate-200 rounded-lg text-xs focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 bg-slate-50 hover:bg-white transition-colors font-bold text-slate-700 outline-none appearance-none">
                                 <option value="">-- Pilih Shift --</option>
                                 <option value="07:00-15:00">Shift 1 (07:00-15:00)</option>
                                 <option value="15:00-23:00">Shift 2 (15:00-23:00)</option>
@@ -294,53 +293,53 @@
                                 <option value="07:00-19:00">Long 1 (07:00-19:00)</option>
                                 <option value="19:00-07:00">Long 2 (19:00-07:00)</option>
                             </select>
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400"><i class="ph-bold ph-caret-down"></i></div>
+                            <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none text-slate-400"><i class="ph-bold ph-caret-down text-xs"></i></div>
                         </div>
 
                         <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"><i class="ph-duotone ph-text-aa"></i></div>
-                            <input type="text" id="bulk-ket" placeholder="Keterangan..." class="w-full pl-9 pr-3 py-3 border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 bg-slate-50 hover:bg-white transition-colors font-bold text-slate-700 outline-none">
+                            <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400"><i class="ph-duotone ph-text-aa text-sm"></i></div>
+                            <input type="text" id="bulk-ket" placeholder="Keterangan..." class="w-full pl-8 pr-2.5 py-2 border border-slate-200 rounded-lg text-xs focus:ring-4 focus:ring-maroon-100 focus:border-maroon-600 bg-slate-50 hover:bg-white transition-colors font-bold text-slate-700 outline-none">
                         </div>
                     </div>
                     
-                    <div class="flex gap-4">
-                        <button onclick="applyBulk('selected')" class="flex-1 bg-maroon-800 text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-maroon-900 transition-colors flex items-center justify-center gap-2 shadow-md shadow-maroon-900/20">
-                            <i class="ph-bold ph-check-square-offset"></i> Terapkan ke Baris Terpilih
+                    <div class="flex gap-3">
+                        <button onclick="applyBulk('selected')" class="flex-1 bg-maroon-800 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-maroon-900 transition-colors flex items-center justify-center gap-1.5 shadow-sm shadow-maroon-900/20">
+                            <i class="ph-bold ph-check-square-offset"></i> Terapkan Terpilih
                         </button>
-                        <button onclick="applyBulk('all')" class="flex-1 bg-white border-2 border-slate-200 text-slate-700 px-5 py-3 rounded-xl text-sm font-bold hover:border-maroon-300 hover:text-maroon-800 transition-colors shadow-sm">
+                        <button onclick="applyBulk('all')" class="flex-1 bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold hover:border-maroon-300 hover:text-maroon-800 transition-colors shadow-sm">
                             Terapkan Semua
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-3xl shadow-elegant border border-maroon-50 overflow-hidden flex flex-col">
-                <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-b from-slate-50 to-white">
+            <div class="bg-white rounded-2xl shadow-elegant border border-maroon-50 overflow-hidden flex flex-col">
+                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-b from-slate-50 to-white">
                     <div>
-                        <h3 class="font-extrabold text-xl text-slate-800 flex items-center gap-2">
-                            <i class="ph-duotone ph-users-three text-maroon-600 text-2xl"></i> Data Karyawan Lembur
+                        <h3 class="font-extrabold text-lg text-slate-800 flex items-center gap-2">
+                            <i class="ph-duotone ph-users-three text-maroon-600 text-xl"></i> Data Karyawan Lembur
                         </h3>
-                        <p class="text-xs text-slate-500 mt-1.5 font-medium flex items-center gap-1">
-                            <i class="ph-fill ph-info text-blue-400"></i> Klik & tahan icon <i class="ph-bold ph-list border border-slate-300 rounded px-1 text-slate-400"></i> lalu seret untuk blok banyak baris.
+                        <p class="text-[11px] text-slate-500 mt-1 font-medium flex items-center gap-1">
+                            <i class="ph-fill ph-info text-blue-400"></i> Klik & tahan icon <i class="ph-bold ph-list border border-slate-300 rounded px-1 text-slate-400"></i> lalu seret untuk memblok.
                         </p>
                     </div>
-                    <button onclick="addRow()" class="bg-white border-2 border-maroon-100 hover:border-maroon-300 hover:bg-maroon-50 text-maroon-800 px-5 py-2.5 rounded-xl shadow-sm text-sm font-bold transition-all flex items-center gap-2 whitespace-nowrap">
-                        <i class="ph-bold ph-plus text-lg"></i> Tambah Baris Baru
+                    <button onclick="addRow()" class="bg-white border border-maroon-200 hover:border-maroon-400 hover:bg-maroon-50 text-maroon-800 px-4 py-2 rounded-lg shadow-sm text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="ph-bold ph-plus text-base"></i> Tambah Baris Baru
                     </button>
                 </div>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left select-none border-collapse min-w-[1024px]">
                         <thead>
-                            <tr class="bg-slate-800 text-white border-b-2 border-slate-900">
-                                <th class="py-4 px-3 w-14 text-center text-[10px] font-extrabold uppercase tracking-widest"><i class="ph-bold ph-check-square-offset text-lg"></i></th>
-                                <th class="py-4 px-2 w-12 text-center text-[10px] font-extrabold uppercase tracking-widest">No</th>
-                                <th class="py-4 px-4 w-36 text-xs font-bold uppercase tracking-wider">NIK</th>
-                                <th class="py-4 px-4 text-xs font-bold uppercase tracking-wider">Nama Lengkap</th>
-                                <th class="py-4 px-4 w-48 text-xs font-bold uppercase tracking-wider">Bagian/Role</th>
-                                <th class="py-4 px-4 w-60 text-xs font-bold uppercase tracking-wider text-center">Waktu & Grup Shift</th>
-                                <th class="py-4 px-4 w-56 text-xs font-bold uppercase tracking-wider">Keterangan</th>
-                                <th class="py-4 px-3 w-14 text-center text-xs font-bold"></th>
+                            <tr class="bg-slate-800 text-white border-b border-slate-900">
+                                <th class="py-2.5 px-2 w-10 text-center text-[10px] font-bold uppercase tracking-widest"><i class="ph-bold ph-check-square-offset text-base"></i></th>
+                                <th class="py-2.5 px-2 w-10 text-center text-[10px] font-bold uppercase tracking-widest">No</th>
+                                <th class="py-2.5 px-3 w-32 text-[11px] font-bold uppercase tracking-wider">NIK</th>
+                                <th class="py-2.5 px-3 text-[11px] font-bold uppercase tracking-wider">Nama Lengkap</th>
+                                <th class="py-2.5 px-3 w-40 text-[11px] font-bold uppercase tracking-wider">Bagian/Role</th>
+                                <th class="py-2.5 px-3 w-56 text-[11px] font-bold uppercase tracking-wider text-center">Waktu & Grup Shift</th>
+                                <th class="py-2.5 px-3 w-48 text-[11px] font-bold uppercase tracking-wider">Keterangan</th>
+                                <th class="py-2.5 px-2 w-10 text-center text-[11px] font-bold"></th>
                             </tr>
                         </thead>
                         <tbody id="karyawan-rows"></tbody>
@@ -348,81 +347,81 @@
                 </div>
             </div>
             
-            <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4 pb-12 border-t border-slate-200 mt-8">
-                <button onclick="previewForm()" id="btn-preview" type="button" class="bg-white hover:bg-slate-50 text-slate-700 px-8 py-4 rounded-2xl font-bold shadow-sm border-2 border-slate-200 transition-all flex justify-center items-center gap-3 text-base hover:-translate-y-1 hover:shadow-md">
-                    <i class="ph-duotone ph-printer text-2xl"></i> Preview Dokumen
+            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-3 pb-8 border-t border-slate-200 mt-6">
+                <button onclick="previewForm()" id="btn-preview" type="button" class="bg-white hover:bg-slate-50 text-slate-700 px-5 py-2.5 rounded-xl font-bold shadow-sm border border-slate-300 transition-all flex justify-center items-center gap-2 text-sm hover:-translate-y-0.5 hover:shadow-md">
+                    <i class="ph-duotone ph-printer text-xl"></i> Preview
                 </button>
-                <button onclick="submitData()" id="btn-submit" class="bg-gradient-to-r from-maroon-800 to-maroon-700 hover:from-maroon-900 hover:to-maroon-800 text-white px-10 py-4 rounded-2xl font-bold shadow-xl shadow-maroon-900/30 transition-all flex justify-center items-center gap-3 text-base hover:-translate-y-1">
-                    <i class="ph-duotone ph-floppy-disk text-2xl"></i> Simpan SPL
+                <button onclick="submitData()" id="btn-submit" class="bg-gradient-to-r from-maroon-800 to-maroon-700 hover:from-maroon-900 hover:to-maroon-800 text-white px-6 py-2.5 rounded-xl font-bold shadow-md shadow-maroon-900/20 transition-all flex justify-center items-center gap-2 text-sm hover:-translate-y-0.5">
+                    <i class="ph-duotone ph-floppy-disk text-xl"></i> Simpan SPL
                 </button>
             </div>
         </div>
 
-        <div id="view-loading" class="no-print hidden-view flex items-center justify-center min-h-[60vh]">
-            <div class="bg-white p-10 rounded-3xl shadow-elegant border border-slate-100 text-center max-w-sm w-full relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1.5 bg-maroon-100"><div class="h-full bg-maroon-600 animate-pulse w-1/2 rounded-r-full"></div></div>
-                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-maroon-50 border border-maroon-100 mb-6 relative">
+        <div id="view-loading" class="no-print hidden-view flex items-center justify-center min-h-[50vh]">
+            <div class="bg-white p-8 rounded-2xl shadow-elegant border border-slate-100 text-center max-w-sm w-full relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-maroon-100"><div class="h-full bg-maroon-600 animate-pulse w-1/2 rounded-r-full"></div></div>
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-maroon-50 border border-maroon-100 mb-5 relative">
                     <div class="absolute inset-0 rounded-full border-4 border-maroon-100 border-t-maroon-700 animate-spin"></div>
-                    <i class="ph-duotone ph-paper-plane-tilt text-4xl text-maroon-800"></i>
+                    <i class="ph-duotone ph-paper-plane-tilt text-3xl text-maroon-800"></i>
                 </div>
-                <h2 id="loading-text" class="text-2xl font-extrabold text-slate-800 mb-2">Memproses Data</h2>
-                <p class="text-slate-500 text-sm font-medium">Sistem sedang memvalidasi dan menyimpan data pengajuan Anda.</p>
+                <h2 id="loading-text" class="text-xl font-extrabold text-slate-800 mb-1.5">Memproses Data</h2>
+                <p class="text-slate-500 text-xs font-medium">Sistem sedang memvalidasi dan menyimpan pengajuan Anda.</p>
             </div>
         </div>
 
-        <div id="view-success" class="no-print hidden-view flex items-center justify-center min-h-[60vh]">
-            <div class="bg-white p-10 rounded-3xl shadow-elegant border border-slate-100 text-center max-w-md w-full relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-10"></div>
-                <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-emerald-50 mb-6 border border-emerald-100">
-                    <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center shadow-inner"><i class="ph-bold ph-check text-4xl text-emerald-600"></i></div>
+        <div id="view-success" class="no-print hidden-view flex items-center justify-center min-h-[50vh]">
+            <div class="bg-white p-8 rounded-2xl shadow-elegant border border-slate-100 text-center max-w-sm w-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50 rounded-bl-full -z-10"></div>
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-50 mb-5 border border-emerald-100">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center shadow-inner"><i class="ph-bold ph-check text-3xl text-emerald-600"></i></div>
                 </div>
-                <h2 class="text-2xl font-extrabold text-slate-800 mb-3">Pengajuan Berhasil</h2>
-                <p id="success-text" class="text-slate-600 mb-8 leading-relaxed font-medium">Tindakan berhasil diproses oleh sistem.</p>
-                <div class="space-y-3">
-                    <button onclick="resetApp()" class="w-full bg-gradient-to-r from-maroon-800 to-maroon-700 text-white px-6 py-4 rounded-xl font-bold shadow-lg shadow-maroon-900/20 hover:shadow-maroon-900/40 transition-all">Kembali ke Form Baru</button>
-                    <button onclick="showHistory()" class="w-full bg-white border-2 border-slate-200 text-slate-700 px-6 py-4 rounded-xl font-bold shadow-sm hover:border-slate-300 hover:bg-slate-50 transition-all">Lihat Riwayat</button>
+                <h2 class="text-xl font-extrabold text-slate-800 mb-2">Pengajuan Berhasil</h2>
+                <p id="success-text" class="text-slate-600 mb-6 text-sm leading-relaxed font-medium">Tindakan berhasil diproses oleh sistem.</p>
+                <div class="space-y-2.5">
+                    <button onclick="resetApp()" class="w-full bg-gradient-to-r from-maroon-800 to-maroon-700 text-white px-5 py-3 rounded-lg text-sm font-bold shadow-md shadow-maroon-900/10 hover:shadow-maroon-900/30 transition-all">Kembali ke Form Baru</button>
+                    <button onclick="showHistory()" class="w-full bg-white border border-slate-300 text-slate-700 px-5 py-3 rounded-lg text-sm font-bold shadow-sm hover:bg-slate-50 transition-all">Lihat Riwayat</button>
                 </div>
             </div>
         </div>
 
-        <div id="view-history" class="no-print hidden-view space-y-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-8 rounded-3xl shadow-elegant border border-maroon-50 relative overflow-hidden">
-                 <div class="absolute top-0 right-0 w-64 h-64 bg-maroon-50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+        <div id="view-history" class="no-print hidden-view space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl shadow-elegant border border-maroon-50 relative overflow-hidden">
+                 <div class="absolute top-0 right-0 w-48 h-48 bg-maroon-50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
                 <div>
-                    <h2 class="text-3xl font-extrabold text-slate-800 flex items-center gap-3 tracking-tight">
-                        <div class="bg-maroon-100 text-maroon-700 p-2 rounded-xl"><i class="ph-duotone ph-clock-counter-clockwise"></i></div>
+                    <h2 class="text-2xl font-extrabold text-slate-800 flex items-center gap-2.5 tracking-tight">
+                        <div class="bg-maroon-100 text-maroon-700 p-1.5 rounded-lg"><i class="ph-duotone ph-clock-counter-clockwise"></i></div>
                         Riwayat Pengajuan SPL
                     </h2>
-                    <p class="text-slate-500 text-sm mt-2 ml-14 font-medium">Pantau status pengajuan Surat Perintah Lembur yang telah Anda buat.</p>
+                    <p class="text-slate-500 text-xs mt-1.5 ml-11 font-medium">Pantau status pengajuan Surat Perintah Lembur yang telah Anda buat.</p>
                 </div>
-                <button onclick="resetApp()" class="bg-gradient-to-r from-maroon-800 to-maroon-700 hover:from-maroon-900 hover:to-maroon-800 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-maroon-900/20 transition-all flex items-center gap-2 whitespace-nowrap">
-                    <i class="ph-bold ph-plus text-lg"></i> Buat SPL Baru
+                <button onclick="resetApp()" class="bg-gradient-to-r from-maroon-800 to-maroon-700 hover:from-maroon-900 hover:to-maroon-800 text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md shadow-maroon-900/20 transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i class="ph-bold ph-plus text-base"></i> Buat Baru
                 </button>
             </div>
-            <div class="bg-white rounded-3xl shadow-elegant border border-slate-100 overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-elegant border border-slate-100 overflow-hidden">
                 <div id="history-container" class="divide-y divide-slate-100"></div>
             </div>
         </div>
 
-        <div id="view-print" class="no-print hidden-view max-w-5xl mx-auto space-y-6">
-            <div class="bg-white p-8 rounded-3xl shadow-elegant border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div id="view-print" class="no-print hidden-view max-w-5xl mx-auto space-y-5">
+            <div class="bg-white p-6 rounded-2xl shadow-elegant border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 class="text-2xl font-extrabold text-slate-800 flex items-center gap-3">
-                        <div class="bg-maroon-100 text-maroon-700 p-2 rounded-xl"><i class="ph-duotone ph-printer"></i></div>
+                    <h1 class="text-xl font-extrabold text-slate-800 flex items-center gap-2.5">
+                        <div class="bg-maroon-100 text-maroon-700 p-1.5 rounded-lg"><i class="ph-duotone ph-printer"></i></div>
                         Preview Dokumen SPL
                     </h1>
-                    <p class="text-slate-500 text-sm mt-2 ml-12 font-medium">Pastikan format cetak sudah sesuai sebelum melakukan pencetakan fisik.</p>
+                    <p class="text-slate-500 text-xs mt-1.5 ml-11 font-medium">Pastikan format cetak sudah sesuai sebelum melakukan pencetakan fisik.</p>
                 </div>
-                <div class="flex gap-3">
-                    <button onclick="showView('view-input')" class="bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 px-5 py-3 rounded-xl font-bold shadow-sm transition-all flex items-center gap-2 whitespace-nowrap">
-                        <i class="ph-bold ph-arrow-left text-lg"></i> Kembali
+                <div class="flex gap-2.5">
+                    <button onclick="showView('view-input')" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph-bold ph-arrow-left text-base"></i> Kembali
                     </button>
-                    <button onclick="printDocument()" class="bg-gradient-to-r from-maroon-800 to-maroon-700 hover:from-maroon-900 hover:to-maroon-800 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-maroon-900/30 transition-all flex items-center gap-2 whitespace-nowrap">
-                        <i class="ph-bold ph-printer text-lg"></i> Cetak Sekarang
+                    <button onclick="printDocument()" class="bg-gradient-to-r from-maroon-800 to-maroon-700 hover:from-maroon-900 hover:to-maroon-800 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-md shadow-maroon-900/20 transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="ph-bold ph-printer text-base"></i> Cetak Sekarang
                     </button>
                 </div>
             </div>
-            <div id="orientation-info" class="bg-blue-50 text-blue-800 p-5 rounded-2xl text-sm border border-blue-100 flex items-start gap-4"></div>
+            <div id="orientation-info" class="bg-blue-50 text-blue-800 p-4 rounded-xl text-xs border border-blue-100 flex items-start gap-3"></div>
         </div>
     </main>
 
@@ -615,21 +614,21 @@
             tr.setAttribute('data-color-idx', '0');
             
             tr.innerHTML = `
-                <td class="py-3 px-3 text-center drag-handle" title="Klik & seret untuk blok baris"><i class="ph-bold ph-list text-xl"></i></td>
-                <td class="py-3 px-2 text-center"><span class="row-number text-[11px] font-extrabold px-2.5 py-1.5 rounded-lg border transition-colors"></span></td>
-                <td class="py-3 px-2"><input type="text" class="nik table-input font-mono font-bold text-slate-900 tracking-wide text-center" placeholder="NIK" value="${data.nik || ''}"></td>
-                <td class="py-3 px-2"><input type="text" class="nama table-input uppercase font-extrabold text-slate-800" placeholder="Nama Karyawan" value="${data.nama || ''}"></td>
-                <td class="py-3 px-2"><input type="text" class="role table-input uppercase font-bold text-slate-700" placeholder="Role" value="${data.role || ''}"></td>
-                <td class="py-3 px-3 text-center">
-                    <div class="flex items-center justify-center gap-1.5 mb-2 bg-white/50 p-1.5 rounded-xl border border-black/5 shadow-inner">
-                        <input type="time" class="mulai table-input text-center font-extrabold text-slate-900 w-28 px-1 py-1" value="${data.mulai || '07:00'}" onchange="updateShiftColors()">
-                        <span class="text-slate-400 font-bold px-1"><i class="ph-bold ph-arrow-right"></i></span>
-                        <input type="time" class="selesai table-input text-center font-extrabold text-slate-900 w-28 px-1 py-1" value="${data.selesai || '15:00'}" onchange="updateShiftColors()">
+                <td class="py-2 px-2 text-center drag-handle" title="Klik & seret untuk blok baris"><i class="ph-bold ph-list text-lg"></i></td>
+                <td class="py-2 px-2 text-center"><span class="row-number text-[10px] font-extrabold px-2 py-1 rounded border transition-colors"></span></td>
+                <td class="py-2 px-2"><input type="text" class="nik table-input text-xs font-mono font-bold text-slate-900 tracking-wide text-center" placeholder="NIK" value="${data.nik || ''}"></td>
+                <td class="py-2 px-2"><input type="text" class="nama table-input text-xs uppercase font-extrabold text-slate-800" placeholder="Nama Karyawan" value="${data.nama || ''}"></td>
+                <td class="py-2 px-2"><input type="text" class="role table-input text-xs uppercase font-bold text-slate-700" placeholder="Role" value="${data.role || ''}"></td>
+                <td class="py-2 px-2 text-center">
+                    <div class="flex items-center justify-center gap-1 mb-1.5 bg-white/50 p-1 rounded-lg border border-black/5 shadow-inner">
+                        <input type="time" class="mulai table-input text-xs text-center font-extrabold text-slate-900 w-24 px-1 py-1" value="${data.mulai || '07:00'}" onchange="updateShiftColors()">
+                        <span class="text-slate-400 font-bold px-0.5"><i class="ph-bold ph-arrow-right text-[10px]"></i></span>
+                        <input type="time" class="selesai table-input text-xs text-center font-extrabold text-slate-900 w-24 px-1 py-1" value="${data.selesai || '15:00'}" onchange="updateShiftColors()">
                     </div>
-                    <div class="shift-badge text-[10px] font-extrabold px-4 py-1 rounded-full uppercase w-max mx-auto shadow-sm tracking-wider"><span class="shift-name-text">Shift 1</span></div>
+                    <div class="shift-badge text-[9px] font-extrabold px-3 py-0.5 rounded-full uppercase w-max mx-auto shadow-sm tracking-wider"><span class="shift-name-text">Shift 1</span></div>
                 </td>
-                <td class="py-3 px-2"><input type="text" class="ket table-input font-medium text-slate-700" placeholder="Alasan lembur..." value="${data.ket || ''}"></td>
-                <td class="py-3 px-3 text-center"><button onclick="removeRow(this)" class="w-10 h-10 rounded-2xl flex items-center justify-center text-slate-400 hover:bg-red-100 hover:text-red-600 transition-all mx-auto" title="Hapus baris"><i class="ph-bold ph-trash text-xl"></i></button></td>
+                <td class="py-2 px-2"><input type="text" class="ket table-input text-xs font-medium text-slate-700" placeholder="Alasan lembur..." value="${data.ket || ''}"></td>
+                <td class="py-2 px-2 text-center"><button onclick="removeRow(this)" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:bg-red-100 hover:text-red-600 transition-all mx-auto" title="Hapus baris"><i class="ph-bold ph-trash text-lg"></i></button></td>
             `;
             tbody.appendChild(tr);
             updateShiftColors();
@@ -894,7 +893,7 @@
             const historyData = JSON.parse(localStorage.getItem('spl_history') || '[]');
 
             if(historyData.length === 0) { 
-                container.innerHTML = `<div class="p-12 text-center text-slate-500 font-bold text-lg flex flex-col items-center justify-center gap-4"><i class="ph-duotone ph-folder-open text-5xl text-slate-300"></i>Belum ada data SPL yang disimpan.</div>`; 
+                container.innerHTML = `<div class="p-10 text-center text-slate-500 font-bold text-base flex flex-col items-center justify-center gap-3"><i class="ph-duotone ph-folder-open text-4xl text-slate-300"></i>Belum ada data SPL yang disimpan.</div>`; 
                 return; 
             }
 
@@ -902,7 +901,6 @@
             historyData.forEach(item => {
                 const isCloud = !!GAS_URL;
                 
-                // Format tanggal menjadi Hari, Tanggal Bulan Tahun
                 let formatTgl = item.tgl;
                 try {
                     const d = new Date(item.tgl);
@@ -912,26 +910,26 @@
                 } catch(e) {}
 
                 html += `
-                <div class="p-5 sm:p-8 hover:bg-slate-50/50 transition-colors border-b border-slate-100 last:border-b-0 group">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-5">
+                <div class="p-4 sm:p-6 hover:bg-slate-50/50 transition-colors border-b border-slate-100 last:border-b-0 group">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                         <div>
-                            <div class="flex items-center gap-3 mb-3">
-                                <h3 class="font-extrabold text-xl text-slate-800">${item.id}</h3>
-                                <span class="bg-${isCloud?'blue':'emerald'}-50 text-${isCloud?'blue':'emerald'}-700 px-3 py-1.5 rounded-full text-xs font-bold border border-${isCloud?'blue':'emerald'}-200 flex items-center gap-1.5 shadow-sm">
-                                    <i class="ph-bold ${isCloud?'ph-cloud-check':'ph-check-circle'}"></i> ${isCloud?'Tersimpan di Cloud':'Tersimpan Lokal'}
+                            <div class="flex items-center gap-2.5 mb-2.5">
+                                <h3 class="font-extrabold text-lg text-slate-800">${item.id}</h3>
+                                <span class="bg-${isCloud?'blue':'emerald'}-50 text-${isCloud?'blue':'emerald'}-700 px-2.5 py-1 rounded-full text-[10px] font-bold border border-${isCloud?'blue':'emerald'}-200 flex items-center gap-1 shadow-sm">
+                                    <i class="ph-bold ${isCloud?'ph-cloud-check':'ph-check-circle'}"></i> ${isCloud?'Di Cloud':'Di Lokal'}
                                 </span>
                             </div>
-                            <div class="text-sm text-slate-600 flex flex-wrap items-center gap-3 font-bold">
-                                <span class="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm"><i class="ph-duotone ph-map-pin-line text-maroon-600 text-lg"></i> ${item.stage || 'Stage 1'}</span>
-                                <span class="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm"><i class="ph-duotone ph-calendar-blank text-maroon-600 text-lg"></i> ${formatTgl}</span>
-                                <span class="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm"><i class="ph-duotone ph-factory text-maroon-600 text-lg"></i> ${item.bag}</span>
-                                <span class="flex items-center gap-1.5 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm"><i class="ph-duotone ph-users-three text-maroon-600 text-lg"></i> ${item.karyawan ? item.karyawan.length : (item.jumlah_karyawan || 0)} Orang</span>
+                            <div class="text-xs text-slate-600 flex flex-wrap items-center gap-2 font-bold">
+                                <span class="flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-sm"><i class="ph-duotone ph-map-pin-line text-maroon-600 text-base"></i> ${item.stage || 'Stage 1'}</span>
+                                <span class="flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-sm"><i class="ph-duotone ph-calendar-blank text-maroon-600 text-base"></i> ${formatTgl}</span>
+                                <span class="flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-sm"><i class="ph-duotone ph-factory text-maroon-600 text-base"></i> ${item.bag}</span>
+                                <span class="flex items-center gap-1 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-sm"><i class="ph-duotone ph-users-three text-maroon-600 text-base"></i> ${item.karyawan ? item.karyawan.length : (item.jumlah_karyawan || 0)} Orang</span>
                             </div>
                         </div>
-                        <div class="flex flex-col sm:items-end gap-3">
-                            <div class="text-xs text-slate-400 font-bold flex items-center gap-1"><i class="ph-duotone ph-clock"></i> ${item.date_created}</div>
-                            <button onclick="loadPrintView('${item.id}')" class="text-maroon-800 hover:text-white font-bold text-sm flex items-center gap-2 bg-maroon-50 hover:bg-maroon-800 px-6 py-3 rounded-xl transition-all border border-maroon-200 hover:border-maroon-800 w-full sm:w-auto justify-center shadow-sm group-hover:scale-105">
-                                <i class="ph-duotone ph-printer text-xl"></i> Cek & Cetak
+                        <div class="flex flex-col sm:items-end gap-2.5">
+                            <div class="text-[10px] text-slate-400 font-bold flex items-center gap-1"><i class="ph-duotone ph-clock"></i> ${item.date_created}</div>
+                            <button onclick="loadPrintView('${item.id}')" class="text-maroon-800 hover:text-white font-bold text-xs flex items-center gap-1.5 bg-maroon-50 hover:bg-maroon-800 px-4 py-2.5 rounded-lg transition-all border border-maroon-200 hover:border-maroon-800 w-full sm:w-auto justify-center shadow-sm group-hover:scale-105">
+                                <i class="ph-duotone ph-printer text-base"></i> Cek & Cetak
                             </button>
                         </div>
                     </div>
